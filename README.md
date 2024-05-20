@@ -67,7 +67,7 @@ Sau đây chúng ta sẽ deploy treafik và app lên docker swarm:
 sudo docker stack deploy --compose-file docker-compose.yml stackdemo
 ```
 Kiểm tra các service:
-![alt text](/2.png)](https://github.com/nguyentrunghieu15/microservice_demo/blob/main/2.PNG)
+![alt text](https://github.com/nguyentrunghieu15/microservice_demo/blob/main/2.PNG)
 
 Scale app lên nhiều instance bằng lệnh sau:
 ```
