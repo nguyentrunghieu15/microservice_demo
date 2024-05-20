@@ -41,7 +41,7 @@ sudo docker node ls
 ```
 Đây là ví dụ kết quả trả về:
 
-![alt text](/1.PNG)
+![alt text](https://github.com/nguyentrunghieu15/microservice_demo/blob/main/1.PNG)
 
 Tiếp tục ta tạo 1 registry để cho 3 máy lấy images
 Trên máy manager chạy lênh sau để tạo 1 registry:
@@ -74,10 +74,10 @@ Scale app lên nhiều instance bằng lệnh sau:
 sudo docker service scale stackdemo_app=4
 ```
 Kiểm tra lại:
-![alt text](/3.png)
+![alt text](https://github.com/nguyentrunghieu15/microservice_demo/blob/main/3.PNG)
 
 Chúng ta có thể kiểm tra bằng cách mở trình duyệt lên với mỗi lần mở sẽ thấy app id khác nhau, chứng tỏ app đã được load balancing
-![alt text](/4.png)
-![alt text](/5.png)
+![alt text](https://github.com/nguyentrunghieu15/microservice_demo/blob/main/4.PNG)
+![alt text](https://github.com/nguyentrunghieu15/microservice_demo/blob/main/5.PNG)
 
 
