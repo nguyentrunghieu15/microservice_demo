@@ -1,29 +1,25 @@
-version: '3'
+version: "3"
 
 services:
- reverse-proxy:
-   # The official v3 Traefik docker image
-  image: traefik:v3.0
-   # Enables the web UI and tells Traefik to listen to docker
-  command:
-    - "--api.insecure=true"
-    - "--providers.docker=true"
-    - "--providers.docker.swarmMode=true"
-  ports:
-      # The HTTP port
-      - "80:80"
-      # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
-  volumes:
-     # So that Traefik can listen to the Docker events
-     - /var/run/docker.sock:/var/run/docker.sock
+    reverse-proxy:
+        # The official v3 Traefik docker image
+        image: traefik:v3.0
+        # Enables the web UI and tells Traefik to listen to docker
+        command:
+            - "--providers.swarm.endpoint=tcp://172.17.0.1:2377"
+        ports:
+            # The HTTP port
+            - "81:80"
+            # The Web UI (enabled by --api.insecure=true)
+            - "8080:8080"
+        volumes:
+            # So that Traefik can listen to the Docker events
+            - /var/run/docker.sock:/var/run/docker.sock
 
-  web:
-    image: 192.168.88.132:5000/app
-    build: .
-    ports:
-      - "5000:8080"
-    deploy:
-      labels:
-        - traefik.http.routers.web.rule=Path(`*`)
-        - traefik.http.services.web.loadbalancer.server.port=80
+    web:
+        image: 192.168.88.132:5000/app
+        build: .
+        deploy:
+            labels:
+                - "traefik.http.routers.web.rule=Path(`/hello-world`)"
+                - "traefik.http.services.web.loadbalancer.server.port=5000"
