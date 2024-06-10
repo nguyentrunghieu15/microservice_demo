@@ -6,20 +6,19 @@ services:
         image: traefik:v3.0
         # Enables the web UI and tells Traefik to listen to docker
         command:
-            - "--providers.swarm.endpoint=tcp://172.17.0.1:2377"
-        ports:
-            # The HTTP port
-            - "81:80"
-            # The Web UI (enabled by --api.insecure=true)
-            - "8080:8080"
-        volumes:
-            # So that Traefik can listen to the Docker events
-            - /var/run/docker.sock:/var/run/docker.sock
+            - "--providers.swarm=true"
+            - "--entryPoints.web.address=:80"
+        deploy:
+            placement:
+                constraints:
+                - node.role == manager
 
     web:
-        image: 192.168.88.132:5000/app
+        image: app
         build: .
         deploy:
             labels:
-                - "traefik.http.routers.web.rule=Path(`/hello-world`)"
-                - "traefik.http.services.web.loadbalancer.server.port=5000"
+                - "traefik.http.routers.router1.entryPoints=web"
+                - "traefik.http.routers.router1.rule=Path(`/hello-world`)"
+                - "traefik.http.routers.router1.service=service1"
+                - "traefik.http.services.service1.loadbalancer.server.port=5000"
