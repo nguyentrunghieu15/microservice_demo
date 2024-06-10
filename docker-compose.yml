@@ -8,10 +8,17 @@ services:
         command:
             - "--providers.swarm=true"
             - "--entryPoints.web.address=:80"
+        ports:
+            - "80:80"
         deploy:
             placement:
                 constraints:
-                - node.role == manager
+                    - node.role == manager
+            labels:
+                - "traefik.http.services.app.loadbalancer.server.port=80"
+
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
 
     web:
         image: app
